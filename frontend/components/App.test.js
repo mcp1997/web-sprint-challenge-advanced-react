@@ -119,6 +119,7 @@ test('user can move LEFT once, CANNOT move LEFT again, type in forbidden email, 
   await userEvent.click(submitButton)
   await waitFor(() => {
     expect(emailInput).toHaveValue('')
-    expect(message).toHaveTextContent(/foo@bar.baz failure #27/i)
   })
+
+  expect(message).toHaveTextContent(/foo@bar.baz failure #27/i)
 })
