@@ -27,17 +27,17 @@ export default class AppClass extends React.Component {
     this.setState(initialState)
   }
 
-  getXY = (index) => {
+  getXY = (currentIndex) => {
     // It it not necessary to have a state to track the coordinates.
     // It's enough to know what index the "B" is at, to be able to calculate them.
-    if (index === 0) return { x: 1, y: 1, position: `Coordinates (1, 1)`}
-    else if (index === 1) return { x: 2, y: 1, position: `Coordinates (2, 1)`}
-    else if (index === 2) return { x: 3, y: 1, position: `Coordinates (3, 1)`}
-    else if (index === 3) return { x: 1, y: 2, position: `Coordinates (1, 2)`}
-    else if (index === 4) return { x: 2, y: 2, position: `Coordinates (2, 2)`}
-    else if (index === 5) return { x: 3, y: 2, position: `Coordinates (3, 2)`}
-    else if (index === 6) return { x: 1, y: 3, position: `Coordinates (1, 3)`}
-    else if (index === 7) return { x: 2, y: 3, position: `Coordinates (2, 3)`}
+    if (currentIndex === 0) return { x: 1, y: 1, position: `Coordinates (1, 1)`}
+    else if (currentIndex === 1) return { x: 2, y: 1, position: `Coordinates (2, 1)`}
+    else if (currentIndex === 2) return { x: 3, y: 1, position: `Coordinates (3, 1)`}
+    else if (currentIndex === 3) return { x: 1, y: 2, position: `Coordinates (1, 2)`}
+    else if (currentIndex === 4) return { x: 2, y: 2, position: `Coordinates (2, 2)`}
+    else if (currentIndex === 5) return { x: 3, y: 2, position: `Coordinates (3, 2)`}
+    else if (currentIndex === 6) return { x: 1, y: 3, position: `Coordinates (1, 3)`}
+    else if (currentIndex === 7) return { x: 2, y: 3, position: `Coordinates (2, 3)`}
     else return { x: 3, y: 3, position: `Coordinates (3, 3)`}
   }
 
