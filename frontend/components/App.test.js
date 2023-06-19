@@ -4,6 +4,8 @@ import { render, screen, fireEvent, waitFor } from '@testing-library/react'
 import '@testing-library/jest-dom/extend-expect'
 import AppFunctional from './AppFunctional'
 
+jest.setTimeout(1000) // default 5000 too long for Codegrade
+
 test('it renders without errors', () => {
   render(<AppFunctional />)
 })
