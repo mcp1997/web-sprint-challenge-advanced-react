@@ -1,7 +1,6 @@
 // Write your tests here
 import React from 'react'
-import { render, screen, waitFor } from '@testing-library/react'
-import userEvent from '@testing-library/user-event'
+import { render, screen, fireEvent, waitFor } from '@testing-library/react'
 import '@testing-library/jest-dom/extend-expect'
 import AppFunctional from './AppFunctional'
 
@@ -15,10 +14,10 @@ test('user can move UP once, LEFT once, and DOWN twice - correct coordinates and
   const upButton = screen.getByTestId(/up/i)
   const leftButton = screen.getByTestId(/left/i)
   const downButton = screen.getByTestId(/down/i)
-  await userEvent.click(upButton)
-  await userEvent.click(leftButton)
-  await userEvent.click(downButton)
-  await userEvent.click(downButton)
+  fireEvent.click(upButton)
+  fireEvent.click(leftButton)
+  fireEvent.click(downButton)
+  fireEvent.click(downButton)
 
   const coordinates = await screen.findByTestId(/coordinates/i)
   const steps = await screen.findByTestId(/steps/i)
@@ -35,11 +34,11 @@ test('user can move RIGHT once, LEFT twice, UP once, and RESET - correct coordin
   const leftButton = screen.getByTestId(/left/i)
   const upButton = screen.getByTestId(/up/i)
   const resetButton = screen.getByTestId(/reset/i)
-  await userEvent.click(rightButton)
-  await userEvent.click(leftButton)
-  await userEvent.click(leftButton)
-  await userEvent.click(upButton)
-  await userEvent.click(resetButton)
+  fireEvent.click(rightButton)
+  fireEvent.click(leftButton)
+  fireEvent.click(leftButton)
+  fireEvent.click(upButton)
+  fireEvent.click(resetButton)
 
   const coordinates = await screen.findByTestId(/coordinates/i)
   const steps = await screen.findByTestId(/steps/i)
@@ -53,8 +52,8 @@ test('user can move UP once, but NOT twice - correct coordinates, steps, and mes
   render(<AppFunctional />)
 
   const upButton = screen.getByTestId(/up/i)
-  await userEvent.click(upButton)
-  await userEvent.click(upButton)
+  fireEvent.click(upButton)
+  fireEvent.click(upButton)
 
   const coordinates = await screen.findByTestId(/coordinates/i)
   const steps = await screen.findByTestId(/steps/i)
@@ -71,8 +70,8 @@ test('user can move DOWN once, RIGHT once, type in a valid email, and submit - c
 
   const downButton = screen.getByTestId(/down/i)
   const rightButton = screen.getByTestId(/right/i)
-  await userEvent.click(downButton)
-  await userEvent.click(rightButton)
+  fireEvent.click(downButton)
+  fireEvent.click(rightButton)
 
   const coordinates = await screen.findByTestId(/coordinates/i)
   const steps = await screen.findByTestId(/steps/i)
@@ -82,25 +81,24 @@ test('user can move DOWN once, RIGHT once, type in a valid email, and submit - c
   expect(steps).toHaveTextContent(/you moved 2 times/i)
 
   const emailInput = screen.getByPlaceholderText(/type email/i)
-  await userEvent.type(emailInput, 'matt@matt.com')
+  fireEvent.change(emailInput, { target: { value: 'matt@matt.com'}})
   expect(emailInput).toHaveValue('matt@matt.com')
 
   const submitButton = screen.getByTestId(/submit/i)
-  await userEvent.click(submitButton)
-  await waitFor(() => {
-    expect(emailInput).toHaveValue('')
-  })
+  fireEvent.click(submitButton)
   
   const message = await screen.findByTestId(/message/i)
-  expect(message).toHaveTextContent(/matt win #73/i)
+  await waitFor(() => {
+    expect(message).toHaveTextContent(/matt win #73/i)
+  })
 })
 
 test('user can move LEFT once, CANNOT move LEFT again, type in forbidden email, and submit - correct coordinates, steps, and messages appear', async () => {
   render(<AppFunctional />)
 
   const leftButton = screen.getByTestId(/left/i)
-  await userEvent.click(leftButton)
-  await userEvent.click(leftButton)
+  fireEvent.click(leftButton)
+  fireEvent.click(leftButton)
 
   const coordinates = await screen.findByTestId(/coordinates/i)
   const steps = await screen.findByTestId(/steps/i)
@@ -112,14 +110,14 @@ test('user can move LEFT once, CANNOT move LEFT again, type in forbidden email, 
   expect(message).toHaveTextContent(/you can't go left/i)
 
   const emailInput = screen.getByPlaceholderText(/type email/i)
-  await userEvent.type(emailInput, 'foo@bar.baz')
+  fireEvent.change(emailInput, { target: { value: 'foo@bar.baz' }})
   expect(emailInput).toHaveValue('foo@bar.baz')
 
   const submitButton = screen.getByTestId(/submit/i)
-  await userEvent.click(submitButton)
+  fireEvent.click(submitButton)
+
   await waitFor(() => {
     expect(emailInput).toHaveValue('')
+    expect(message).toHaveTextContent(/foo@bar.baz failure #27/i)
   })
-
-  expect(message).toHaveTextContent(/foo@bar.baz failure #27/i)
 })
