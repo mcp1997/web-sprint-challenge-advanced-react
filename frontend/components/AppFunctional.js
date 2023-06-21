@@ -113,15 +113,15 @@ export default function AppFunctional(props) {
         <h3 data-testid="message" id="message">{message}</h3>
       </div>
       <div id="keypad">
-        <button onClick={e => move(e)} data-testid="left" id="left">LEFT</button>
-        <button onClick={e => move(e)} data-testid="up" id="up">UP</button>
-        <button onClick={e => move(e)} data-testid="right" id="right">RIGHT</button>
-        <button onClick={e => move(e)} data-testid="down" id="down">DOWN</button>
-        <button onClick={() => reset()} data-testid="reset" id="reset">reset</button>
+        <button onClick={move} data-testid="left" id="left">LEFT</button>
+        <button onClick={move} data-testid="up" id="up">UP</button>
+        <button onClick={move} data-testid="right" id="right">RIGHT</button>
+        <button onClick={move} data-testid="down" id="down">DOWN</button>
+        <button onClick={reset} data-testid="reset" id="reset">reset</button>
       </div>
       <form>
-        <input onChange={e => onChange(e)} id="email" type="email" placeholder="type email" value={email}></input>
-        <input onClick={e => onSubmit(e)} data-testid="submit" id="submit" type="submit"></input>
+        <input onChange={onChange} id="email" type="email" placeholder="type email" value={email}></input>
+        <input onClick={onSubmit} data-testid="submit" id="submit" type="submit"></input>
       </form>
     </div>
   )
